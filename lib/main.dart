@@ -21,7 +21,8 @@ class MyHomePage extends StatelessWidget {
         id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
     Transaction(
         id: 't2', title: 't-shirt', amount: 25.99, date: DateTime.now()),
-    Transaction(id: 't3', title: 'jeans', amount: 55.78, date: DateTime.now()),
+    Transaction(id: 't3', title: 'jeans', amount: 55.78, date: DateTime.now(),
+    ),
   ];
 
   @override
@@ -31,7 +32,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -42,14 +43,55 @@ class MyHomePage extends StatelessWidget {
                 textAlign: TextAlign.start,
               ),
               elevation: 5,
-              color: Colors.indigo,
+              color: Colors.blue,
             ),
           ),
           Column(
             children: [
               ...(transactions
                   .map((tx) => Card(
-                        child: Text(tx.title),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.purple,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Text(
+                                '\$ ${tx.amount}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 19,
+                                  color: Colors.purple,
+                                ),
+                              ),
+                              padding: EdgeInsets.all(8),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  tx.title,
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  tx.date.toString(),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ))
                   .toList())
             ],
