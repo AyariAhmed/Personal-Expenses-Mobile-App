@@ -13,6 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
+        fontFamily: 'Quicksand',
+      ),
       home: MyHomePage(),
     );
   }
@@ -54,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (bCtx) {
         return GestureDetector(
           child: NewTransaction(_addNewTransaction),
-          onTap: (){},
+          onTap: () {},
           behavior: HitTestBehavior.opaque,
         );
       },
@@ -65,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter App'),
+        title: Text('Personal Expenses'),
         actions: [
           IconButton(
               icon: Icon(Icons.add),
@@ -87,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               elevation: 5,
-              color: Colors.blue,
+              color: Theme.of(context).primaryColorLight,
             ),
           ),
           TransactionList(_userTransactions),
