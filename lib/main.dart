@@ -9,7 +9,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Personal Expenses',
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -21,6 +22,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter App'),
+        actions: [
+          IconButton(icon: Icon(Icons.add), onPressed: () {})
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,7 +34,7 @@ class MyHomePage extends StatelessWidget {
             width: double.infinity,
             child: Card(
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(8),
                 child: Text(
                   'Chart!',
                   textAlign: TextAlign.start,
