@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/models/transaction.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_expenses/widgets/chart_bar.dart';
 
 class Chart extends StatelessWidget {
-
   final List<Transaction> recentTransactions;
 
   Chart({@required this.recentTransactions});
@@ -16,18 +16,22 @@ class Chart extends StatelessWidget {
       for (var i = 0; i < recentTransactions.length; i++) {
         if (recentTransactions[i].date.day == weekday.day &&
             recentTransactions[i].date.month == weekday.month &&
-            recentTransactions[i].date.year == weekday.year
-        ){
+            recentTransactions[i].date.year == weekday.year) {
           totalSum += recentTransactions[i].amount;
         }
       }
 
-      print('Day ${DateFormat.E().format(weekday)}  -  Amount : ${totalSum}');
-
-      return {'day': DateFormat.E().format(weekday), 'amount': totalSum};
+      return {
+        'day': DateFormat.E().format(weekday).substring(0, 1),
+        'amount': totalSum
+      };
     });
   }
 
+  double get sumWeekSpending {
+    return groupedTransactionValues.fold(
+        0.0, (previousValue, element) => previousValue += element['amount']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +40,22 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: [
-        ],
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ...groupedTransactionValues.map((data) {
+              return Flexible(
+                fit : FlexFit.tight,
+                child: ChartBar(
+                    label: data['day'],
+                    spendingAmount: data['amount'],
+                    spendingPctOfTotal: sumWeekSpending == 0 ? 0.0 : (data['amount'] as double)/sumWeekSpending),
+              );
+            }).toList()
+          ],
+        ),
       ),
     );
   }
