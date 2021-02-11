@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 370,
+      height: 350,
       child: _userTransactions.isEmpty
           ? Column(
               children: [
@@ -19,9 +19,11 @@ class TransactionList extends StatelessWidget {
                   'No Transactions Added Yet',
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 15,),
+                SizedBox(
+                  height: 12,
+                ),
                 Container(
-                    height: 250,
+                    height: 200,
                     child: Image.asset(
                       'assets/images/waiting.png',
                       fit: BoxFit.cover,
@@ -31,43 +33,23 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (ctx, index) {
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 2,
-                          ),
-                        ),
-                        child: Text(
-                          '\$ ${_userTransactions[index].amount.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        padding: EdgeInsets.all(8),
+                  elevation: 3,
+                  margin: EdgeInsets.symmetric(vertical: 8,horizontal: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: FittedBox(
+                            child: Text('\$${_userTransactions[index].amount}')),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            _userTransactions[index].title,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          Text(
-                            DateFormat.yMMMMEEEEd()
-                                .format(_userTransactions[index].date),
-                            style: TextStyle(fontSize: 15, color: Colors.grey),
-                          )
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      _userTransactions[index].title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(DateFormat.yMMMMEEEEd()
+                        .format(_userTransactions[index].date)),
                   ),
                 );
               },

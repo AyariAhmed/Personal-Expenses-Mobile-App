@@ -25,7 +25,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekday).substring(0, 1),
         'amount': totalSum
       };
-    });
+    }).reversed.toList();
   }
 
   double get sumWeekSpending {
@@ -39,19 +39,21 @@ class Chart extends StatelessWidget {
 
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(15),
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(7),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ...groupedTransactionValues.map((data) {
               return Flexible(
-                fit : FlexFit.tight,
+                fit: FlexFit.tight,
                 child: ChartBar(
                     label: data['day'],
                     spendingAmount: data['amount'],
-                    spendingPctOfTotal: sumWeekSpending == 0 ? 0.0 : (data['amount'] as double)/sumWeekSpending),
+                    spendingPctOfTotal: sumWeekSpending == 0
+                        ? 0.0
+                        : (data['amount'] as double) / sumWeekSpending),
               );
             }).toList()
           ],
