@@ -5,13 +5,15 @@ import 'package:personal_expenses/models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> _userTransactions;
+  final Function deleteTransaction;
 
-  TransactionList(userTransaction) : _userTransactions = userTransaction;
+  TransactionList(userTransaction, this.deleteTransaction)
+      : _userTransactions = userTransaction;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350,
+      height: 330,
       child: _userTransactions.isEmpty
           ? Column(
               children: [
@@ -34,14 +36,15 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 return Card(
                   elevation: 3,
-                  margin: EdgeInsets.symmetric(vertical: 8,horizontal: 5),
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
                       child: Padding(
                         padding: const EdgeInsets.all(4),
                         child: FittedBox(
-                            child: Text('\$${_userTransactions[index].amount}')),
+                            child:
+                                Text('\$${_userTransactions[index].amount}')),
                       ),
                     ),
                     title: Text(
@@ -50,6 +53,11 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(DateFormat.yMMMMEEEEd()
                         .format(_userTransactions[index].date)),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () =>
+                          deleteTransaction(_userTransactions[index].id),
+                    ),
                   ),
                 );
               },
