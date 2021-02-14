@@ -47,7 +47,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransactions = [
     /*Transaction(
         id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
@@ -60,6 +60,23 @@ class _MyHomePageState extends State<MyHomePage> {
       date: DateTime.now(),
     ),*/
   ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("App State : "+ state.toString());
+  }
+
+  @override
+  dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   bool _showChart = false;
 
@@ -111,10 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Text(
             'Show Chart',
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(fontWeight: FontWeight.normal, fontSize: 17,color: Colors.grey),
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                fontWeight: FontWeight.normal,
+                fontSize: 17,
+                color: Colors.grey),
           ),
           Switch.adaptive(
               value: _showChart,
